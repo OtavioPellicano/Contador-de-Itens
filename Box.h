@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <fstream>
 #include <map>
+#include <QStringBuilder>
 
 using std::map;
 using std::ifstream;
@@ -22,10 +23,7 @@ public:
     QDir dirOut() const;
     void setDirOut(const QDir &dirOut);
 
-    QString strArqSaida() const;
-    void setStrArqSaida(const QString &strArqSaida);
-
-    unsigned short colBusca() const;
+    short colBusca() const;
     void setColBusca(unsigned short colBusca);
 
     bool processar();
@@ -39,6 +37,9 @@ public:
     QString fullPathArqOut() const;
     void setFullPathArqOut(const QString &fullPathArqOut);
 
+    short colBusca2() const;
+    void setColBusca2(short colBusca2);
+
 private:
     bool descarregarMap(map<QString, size_t> &mapItens);
 
@@ -46,10 +47,10 @@ private:
 
     QDir mDirIn;
     QDir mDirOut;
-    QString mStrArqSaida;
     QString mSep;
     QString mFullPathArqOut;
-    unsigned short mColBusca;
+    short mColBusca;
+    short mColBusca2;
     QStringList mFiltro;
 
 };

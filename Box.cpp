@@ -5,6 +5,7 @@ Box::Box()
 {
     setFiltro(QStringList("*.csv"));
     setSep(";");
+    setColBusca2(-1);
 }
 
 QDir Box::dirIn() const
@@ -27,17 +28,7 @@ void Box::setDirOut(const QDir &dirOut)
     mDirOut = dirOut;
 }
 
-QString Box::strArqSaida() const
-{
-    return mStrArqSaida;
-}
-
-void Box::setStrArqSaida(const QString &strArqSaida)
-{
-    mStrArqSaida = strArqSaida;
-}
-
-unsigned short Box::colBusca() const
+short Box::colBusca() const
 {
     return mColBusca;
 }
@@ -52,12 +43,6 @@ bool Box::processar()
     if(!this->dirIn().exists() || this->dirIn().path() == ".")
         return false;
 
-//    if(!this->dirOut().exists() || this->dirOut().path() == ".")
-//        return false;
-
-//    if(this->strArqSaida().isEmpty())
-//        return false;
-
     if(this->fullPathArqOut().isEmpty())
         return false;
 
@@ -65,6 +50,7 @@ bool Box::processar()
     ifstream arqIn;
     map<QString, size_t> mapItens;
     string str;
+    QString chave;
     QStringList strCsv;
 
     if(arqs.isEmpty())
@@ -79,10 +65,22 @@ bool Box::processar()
             while(std::getline(arqIn, str))
             {
                 strCsv = QString::fromStdString(str).split(this->mSep);
+
+                if(colBusca() >= strCsv.size())
+                    return false;
+
+                if(colBusca2() >= strCsv.size())
+                    return false;
+
+                if(colBusca2() >= 0)
+                    chave = strCsv[colBusca()] % "\t" % strCsv[colBusca2()];
+                else
+                    chave = strCsv[colBusca()];
+
                 try {
-                    mapItens[strCsv[colBusca()]] += 1;
+                    mapItens[chave] += 1;
                 } catch (...) {
-                    qDebug() << "File to big to be processed!";
+                    qDebug() << "File too big to be processed!";
                     return false;
                 }
             }
@@ -125,17 +123,7 @@ bool Box::descarregarMap(map<QString, size_t> &mapItens)
 {
     ofstream arqOut;
 
-
-    if(!this->fullPathArqOut().isEmpty())
-    {
-        arqOut.open(this->fullPathArqOut().toStdString());
-    }
-    else
-    {
-        arqOut.open(this->dirOut().absoluteFilePath(this->strArqSaida()).toStdString());
-    }
-
-
+    arqOut.open(this->fullPathArqOut().toStdString());
 
     if(arqOut.is_open())
     {
@@ -149,12 +137,22 @@ bool Box::descarregarMap(map<QString, size_t> &mapItens)
     }
     else
     {
-        qDebug() << "failed to open: " << this->strArqSaida();
+        qDebug() << "failed to open: " << this->fullPathArqOut();
         return false;
     }
 
     mapItens.clear();
     return true;
+}
+
+short Box::colBusca2() const
+{
+    return mColBusca2;
+}
+
+void Box::setColBusca2(short colBusca2)
+{
+    mColBusca2 = colBusca2;
 }
 
 QString Box::fullPathArqOut() const
