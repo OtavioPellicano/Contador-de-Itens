@@ -36,6 +36,9 @@ public:
     QString sep() const;
     void setSep(const QString &sep);
 
+    QString fullPathArqOut() const;
+    void setFullPathArqOut(const QString &fullPathArqOut);
+
 private:
     bool descarregarMap(map<QString, size_t> &mapItens);
 
@@ -45,6 +48,7 @@ private:
     QDir mDirOut;
     QString mStrArqSaida;
     QString mSep;
+    QString mFullPathArqOut;
     unsigned short mColBusca;
     QStringList mFiltro;
 

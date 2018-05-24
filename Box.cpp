@@ -52,10 +52,13 @@ bool Box::processar()
     if(!this->dirIn().exists() || this->dirIn().path() == ".")
         return false;
 
-    if(!this->dirOut().exists() || this->dirOut().path() == ".")
-        return false;
+//    if(!this->dirOut().exists() || this->dirOut().path() == ".")
+//        return false;
 
-    if(this->strArqSaida().isEmpty())
+//    if(this->strArqSaida().isEmpty())
+//        return false;
+
+    if(this->fullPathArqOut().isEmpty())
         return false;
 
     QStringList arqs = this->dirIn().entryList(this->filtro());
@@ -122,7 +125,17 @@ bool Box::descarregarMap(map<QString, size_t> &mapItens)
 {
     ofstream arqOut;
 
-    arqOut.open(this->dirOut().absoluteFilePath(this->strArqSaida()).toStdString());
+
+    if(!this->fullPathArqOut().isEmpty())
+    {
+        arqOut.open(this->fullPathArqOut().toStdString());
+    }
+    else
+    {
+        arqOut.open(this->dirOut().absoluteFilePath(this->strArqSaida()).toStdString());
+    }
+
+
 
     if(arqOut.is_open())
     {
@@ -142,4 +155,14 @@ bool Box::descarregarMap(map<QString, size_t> &mapItens)
 
     mapItens.clear();
     return true;
+}
+
+QString Box::fullPathArqOut() const
+{
+    return mFullPathArqOut;
+}
+
+void Box::setFullPathArqOut(const QString &fullPathArqOut)
+{
+    mFullPathArqOut = fullPathArqOut;
 }

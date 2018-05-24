@@ -22,7 +22,9 @@ private slots:
 
     void on_pushButton_dir_in_clicked();
 
-    void on_pushButton_dir_out_clicked();
+    void on_checkBox_formar_chave_stateChanged(int arg1);
+
+    void on_checkBox_outro_separador_stateChanged(int arg1);
 
 private:
     Ui::Dialog *ui;
