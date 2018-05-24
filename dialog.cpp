@@ -47,12 +47,12 @@ void Dialog::on_pushButton_arq_saida_clicked()
 
         if(this->box->processar())
         {
-            QMessageBox::information(this, tr("Processamento"), tr("Processamento concluído!"));
+            QMessageBox::information(this, tr("Processamento Concluído"), this->box->msgLog());
         }
         else
         {
             QMessageBox::critical(this, tr("Erro de Processamento!"),
-                                  tr("Muitos dados a serem processados ou \nimpossivel abrir algum arquivo no diretório de origem"));
+                                  this->box->msgLog());
         }
 
     }

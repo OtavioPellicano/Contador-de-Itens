@@ -40,8 +40,15 @@ public:
     short colBusca2() const;
     void setColBusca2(short colBusca2);
 
+    QString msgLog() const;
+    void setMsgLog(const QString &msgLog);
+
+
 private:
     bool descarregarMap(map<QString, size_t> &mapItens);
+    unsigned long qntLinhas() const;
+    void setQntLinhas(unsigned long qntLinhas);
+
 
 private:
 
@@ -52,6 +59,9 @@ private:
     short mColBusca;
     short mColBusca2;
     QStringList mFiltro;
+    QString mMsgLog;
+
+    unsigned long mQntLinhas;
 
 };
 
