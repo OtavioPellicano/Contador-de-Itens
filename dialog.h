@@ -17,6 +17,7 @@ public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
 
+
 private slots:
     void on_pushButton_arq_saida_clicked();
 
@@ -25,6 +26,12 @@ private slots:
     void on_checkBox_formar_chave_stateChanged(int arg1);
 
     void on_checkBox_outro_separador_stateChanged(int arg1);
+
+    void tratarSeparador();
+
+    void tratarTipoArqs();
+
+    void tratarColBusca();
 
 private:
     Ui::Dialog *ui;
